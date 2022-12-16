@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <title>Listado de {{titulo}}s</title>
+</head>
+<body class="container mt-5">
+    <div class="alert alert-info display-1 text-center">Lista de {{titulo}}</div>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} m-2" id="msg" role="alert">
+            {{message}}
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% if Inscritos %}
+    <table class="table table-striped table-inverse table-responsive">
+        <thead class="thead-inverse">
+            <tr>
+                <th>ID Inscripcion</th>
+                <th>Estado</th>
+                <th>Nombre</th>
+                <th>Institución</th>
+                <th>Fecha </th>
+                <th>Hora</th>
+                <th>Fono</th>
+                <th>Observación</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+                <th>Detalle (API)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Inscrito in Inscritos %}
+            <tr>
+                <td>{{ Inscrito.id}}</td>
+                <td>{{ Inscrito.estado}}</td>
+                <td>{{ Inscrito.nombre}}</td>
+                <td>{{ Inscrito.institucion}}</td>
+                <td>{{ Inscrito.fecha_insc}}</td>
+                <td>{{ Inscrito.hora_insc}}</td>
+                <td>{{ Inscrito.fono}}</td>
+                <td>{{ Inscrito.observacion}}</td>
+                <td><a href="/actualizarInscripcion/{{Inscrito.id}}" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></td>
+                <td><a href="/eliminarInscripcion/{{Inscrito.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></td>
+                <td><a href="/cbw_detalle_inscripciones/{{Inscrito.id}}" class="btn btn-success btn-sm"><i class="bi bi-ticket-detailed"></i></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+    {% else %}{% if Institu %}
+    <table class="table table-striped table-inverse table-responsive">
+        <thead class="thead-inverse">
+            <tr>
+                <th>ID INSTITUCION</th>
+                <th>Nombre</th>
+                <th>Region</th>
+                <th>ciudad </th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+                <th>Detalle (API)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Inst in Institu %}
+            <tr>
+                <td>{{ Inst.id}}</td>
+                <td>{{ Inst.nombre}}</td>
+                <td>{{ Inst.region}}</td>
+                <td>{{ Inst.ciudad}}</td>
+                <td><a href="/actualizarInstitucion/{{Inst.id}}" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></td>
+                <td><a href="/eliminarInstitucion/{{Inst.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></td>
+                <td><a href="/fbw_detalleInstitucion/{{Inst.id}}" class="btn btn-success btn-sm"><i class="bi bi-ticket-detailed"></i></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-primary" role="alert">
+        <strong>No hay registros en el sistema</strong>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <a href="../" class="btn btn-danger">VOLVER</a>
+    <a href="../agregar{{titulo}}/"  class="btn btn-info float-end">AGREGAR {{titulo}}</a>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script>
+        setTimeout(function(){
+            if($('#msg').length>0){
+                $('#msg').remove();
+            }
+        },2000)
+    </script>
+</body>
+</html>
